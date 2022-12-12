@@ -2,6 +2,7 @@
 //Problems2 --> Ability to find frequency of words in a large paragraph phrase i.e
 //“Paranoid are not paranoid because they are paranoid but because they keep 
 //putting themselves deliberately into paranoid avoidable situations”
+//Problem3---->Remove "avoidable" word from paragraph phrase
 
 package com.hashtable.assignment;
 
@@ -59,7 +60,6 @@ public class HashTable {
 		myMapNode current = head;
 		if (head == null) {
 			System.out.println("HashTable is empty");
-			return;
 		} else {
 			System.out.println("Occurrence of word in Paragraph");
 			System.out.println("Key && Occurrence");
@@ -68,6 +68,27 @@ public class HashTable {
 				System.out.println(current.key + "    " + current.value);
 				current = current.next;
 			}
+		}
+	}
+
+	/*
+	 * Delete Hash Table index containing a given key.
+	 */
+	public void removeFromHashTable(String keyValue) {
+		myMapNode current = head;
+		if (head == null) {
+			System.out.println("HashTable is empty");
+		} else {
+			myMapNode previous = null;
+			while (current != null && !current.key.equalsIgnoreCase(keyValue)) {
+				// store the value of current in previous
+				previous = current;
+				current = current.next;
+			}
+			if (current == null) {
+				throw new RuntimeException("The key with the given value is not found!!");
+			}
+			previous.next = current.next;
 		}
 	}
 
@@ -81,13 +102,24 @@ public class HashTable {
 		String paragraph = "Paranoids are not paranoid because they are paranoid \n"
 				+ "but because they keep putting themselves deliberately into paranoid avoidable situations";
 
-		// Create HashTable
+		/*
+		 * Create HashTable
+		 */
 		createHashTable(paragraph, hashTable);
+		System.out.println("\nPrinting the original Hash Table below.");
 
 		/*
 		 * Printing the HashTable
 		 */
-		System.out.println("\nPrinting the Hash Table");
+		hashTable.printHashTable();
+		System.out.println();
+
+		/*
+		 * Deleting from hashTable
+		 */
+		hashTable.removeFromHashTable("avoidable");
+		System.out.println("Printing the Hash Table after removing the avoidable word from phrase");
+		System.out.println();
 		hashTable.printHashTable();
 	}
 
