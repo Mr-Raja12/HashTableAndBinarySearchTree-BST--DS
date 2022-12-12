@@ -1,5 +1,6 @@
 //Problems1---->Create a BST by adding adding 56 and then adding 30 & 70.
 //Problems2---->Created a BST As per the given elements
+//Problems3---->Search a Element in the BST
 
 package com.bl.binarysearchtree;
 
@@ -64,6 +65,9 @@ public class BinarySearchTree {
 
 	}
 
+	/*
+	 * A utility function to do inorder traversal of BST
+	 */
 	public void inOrderRec(Node root) {
 		if (root == null)
 			return;
@@ -82,6 +86,27 @@ public class BinarySearchTree {
 			return (size(root.left) + 1 + size(root.right));
 	}
 
+	public boolean search(Node root, int input) {
+		if (root == null) {
+			return false;
+		}
+
+		if (root.data == input) {
+			return true;
+		}
+		// then recur on left subtree
+		boolean result1 = search(root.left, input);
+		if (result1 == true) // node found, no need to look further
+			return true;
+
+		/*
+		 * node is not found in left so recur on right subtree
+		 */
+		boolean result2 = search(root.right, input);
+		return result2;
+
+	}
+
 	public static void main(String[] args) {
 		BinarySearchTree tree = new BinarySearchTree();
 		tree.insert(56);
@@ -97,13 +122,18 @@ public class BinarySearchTree {
 		tree.insert(65);
 		tree.insert(63);
 		tree.insert(55);
-		tree.inOrder();
+		tree.inOrder(); // print inorder traversal of BST
 		System.out.println();
 		int size = tree.size(tree.root);
 		if (size == 13)
 			System.out.println("All elements are added");
 		else
 			System.out.println("Missing some elements");
-	}
 
+		// checking data present or not
+		if (tree.search(tree.root, 63) != false) {
+			System.out.println("63 is present");
+		} else
+			System.out.println("63 is not  present");
+	}
 }
